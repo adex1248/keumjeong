@@ -1,20 +1,26 @@
 import matplotlib.pyplot as plt
 from matplotlib.image import imread
+import glob
 
 import random
 
-pic = ['갑주어_고생대_.PNG', '공룡_중생대_.PNG', '매머드_신생대_.PNG', '방추충_고생대_.PNG',
-       '삼엽충_고생대_.PNG', '스트로마톨라이트_선캄브리아_.PNG', '암모나이트_중생대_.PNG', 
-       '디킨소니아_선캄브리아_.PNG', '필석_고생대_.PNG', '화폐석_신생대_.PNG']
+import glob
+
+address = input("퀴즈 데이터가 있는 폴더의 주소를 적어주세요.")
+im_type = input("이미지의 형식을 적어주세요. 예시: jpg, png")
+trash_data = len(address) + 1
+
+pic = []
+for image in glob.glob(address + '/*'+ im_type):
+    pic.append(image)
+
 
 game = True
 
 nscore = 0
 score = 0
 
-#cho = input("이름 학습을 플레이하려면 1, 시대 학습을 플레이하려면 2를 입력해주세요.")
-
-while game == True :
+while game:
     
     cho = input("이름 학습을 플레이하려면 1, 시대 학습을 플레이하려면 2를 입력해주세요.")
     
@@ -34,12 +40,12 @@ while game == True :
                 break
 
             elif cho == '1' :
-                if name == play.split('_')[0] :
+                if name == play.split('_')[0][trash_data:] :
                     print("정답입니다. +1")
                     score += 1
                     nscore += 1
                 else :
-                    print("오답입니다. -1",  "( 답 :", play.split('_')[0], ")")
+                    print("오답입니다. -1",  "( 답 :", play.split('_')[0][trash_data:], ")")
                     score -= 1
                     nscore -= 1
                     pic.append(play)
@@ -74,4 +80,3 @@ while game == True :
         print("입력이 잘못되었습니다.")
         
 print("학습이 종료됩니다.")
-
